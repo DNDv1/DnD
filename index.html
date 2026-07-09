@@ -69,6 +69,39 @@
         opacity: 1;
         transform: translateY(0);
       }
+      /* Mobile-only responsive tweaks (phones only) */
+      @media (max-width: 640px) {
+        /* Make product cards more compact on small screens */
+        #products .mt-12.grid {
+          gap: 1rem;
+          grid-template-columns: 1fr !important;
+        }
+        #products article {
+          padding: 0.75rem;
+          border-radius: 1rem;
+        }
+        #products article img {
+          height: 12rem !important; /* approx h-48 */
+        }
+        /* Slightly smaller hero and heading on phones */
+        h1 {
+          font-size: 2rem;
+        }
+        /* Make detail panel full-width and slightly padded on mobile */
+        #product-detail {
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        }
+        #product-detail-content {
+          padding: 1rem !important;
+        }
+        /* Increase tappable target for buttons on touch devices */
+        #products button, #product-detail button {
+          min-height: 44px;
+          padding-top: 0.75rem;
+          padding-bottom: 0.75rem;
+        }
+      }
     </style>
   </head>
   <body class="bg-background text-light font-sans leading-relaxed">
@@ -732,6 +765,13 @@
           placePanelNear(article);
           detailSection.classList.remove("hidden");
           detailSection.classList.add("visible");
+          // On phones, ensure the detail panel is scrolled into view so title is visible
+          if (window.innerWidth < 768) {
+            // give the browser a moment to render the panel then scroll
+            setTimeout(() => {
+              detailSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 60);
+          }
         }
 
         function closeDetail() {
