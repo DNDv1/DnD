@@ -3,9 +3,773 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>LUXE Perfume - Artisan Fragrances</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2d2d2d;
+            --accent-color: #c9a961;
+            --text-light: #f5f5f5;
+            --text-dark: #1a1a1a;
+            --border-color: #3a3a3a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ============ HEADER & NAVIGATION ============ */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .icon-btn:hover {
+            color: var(--accent-color);
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+            color: #ccc;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.85rem 2.5rem;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--text-dark);
+            z-index: -1;
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:hover {
+            color: var(--accent-color);
+            left: 0;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* ============ FEATURED SECTION ============ */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin: 1rem auto 0;
+        }
+
+        /* ============ COLLECTIONS GRID ============ */
+        .collections {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .collection-card {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            cursor: pointer;
+            group: collection;
+        }
+
+        .collection-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+            position: relative;
+        }
+
+        .collection-card:hover .collection-bg {
+            transform: scale(1.05);
+        }
+
+        .collection-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .collection-name {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .collection-desc {
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            color: #bbb;
+            margin-bottom: 1.5rem;
+        }
+
+        .collection-card:hover .cta-button {
+            background-color: white;
+            color: var(--text-dark);
+        }
+
+        /* ============ PRODUCT SHOWCASE ============ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .product-price {
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .product-add-btn {
+            padding: 0.7rem 1.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary-color);
+        }
+
+        .product-add-btn:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        /* ============ ACCORDS SECTION ============ */
+        .accords-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .accord-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .accord-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--primary-color);
+            z-index: -1;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s ease;
+        }
+
+        .accord-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .accord-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .accord-card:hover .accord-icon {
+            color: var(--accent-color);
+        }
+
+        .accord-name {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .accord-card:hover .accord-name {
+            color: white;
+        }
+
+        /* ============ NEWSLETTER SECTION ============ */
+        .newsletter {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .newsletter-title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .newsletter-description {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: #bbb;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background-color: #2d2d2d;
+            color: white;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form input::placeholder {
+            color: #999;
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background-color: #d4b574;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-divider {
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .collections {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .accords-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- ============ HEADER ============ -->
+    <header>
+        <div class="header-container">
+            <div class="logo">LUXE</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#collections">Collections</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#accords">Accords</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <button class="icon-btn">🔍</button>
+                <button class="icon-btn">🛍️</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>DISCOVER ELEGANCE</h1>
+            <p>Curated Fragrances for the Discerning Nose</p>
+            <button class="cta-button">Shop Now</button>
+        </div>
+    </section>
+
+    <!-- ============ FEATURED COLLECTIONS ============ -->
+    <section id="collections">
+        <h2 class="section-title">Collections</h2>
+        <div class="collections">
+            <div class="collection-card">
+                <div class="collection-bg">
+                    <div class="collection-content">
+                        <div class="collection-name">For Men</div>
+                        <p class="collection-desc">Bold & Sophisticated</p>
+                        <button class="cta-button">Explore</button>
+                    </div>
+                </div>
+            </div>
+            <div class="collection-card">
+                <div class="collection-bg">
+                    <div class="collection-content">
+                        <div class="collection-name">For Women</div>
+                        <p class="collection-desc">Elegant & Feminine</p>
+                        <button class="cta-button">Explore</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FEATURED PRODUCTS ============ -->
+    <section id="products">
+        <h2 class="section-title">Best Sellers</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-name">Fragrance Name 1</div>
+                <div class="product-price">₱ 0.00</div>
+                <button class="product-add-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-name">Fragrance Name 2</div>
+                <div class="product-price">₱ 0.00</div>
+                <button class="product-add-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-name">Fragrance Name 3</div>
+                <div class="product-price">₱ 0.00</div>
+                <button class="product-add-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-name">Fragrance Name 4</div>
+                <div class="product-price">₱ 0.00</div>
+                <button class="product-add-btn">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FRAGRANCE ACCORDS ============ -->
+    <section id="accords">
+        <h2 class="section-title">Fragrance Accords</h2>
+        <div class="accords-grid">
+            <div class="accord-card">
+                <div class="accord-icon">🌸</div>
+                <div class="accord-name">Floral</div>
+            </div>
+            <div class="accord-card">
+                <div class="accord-icon">🍊</div>
+                <div class="accord-name">Fruity</div>
+            </div>
+            <div class="accord-card">
+                <div class="accord-icon">🌿</div>
+                <div class="accord-name">Fresh</div>
+            </div>
+            <div class="accord-card">
+                <div class="accord-icon">🌶️</div>
+                <div class="accord-name">Spicy</div>
+            </div>
+            <div class="accord-card">
+                <div class="accord-icon">🍬</div>
+                <div class="accord-name">Sweet</div>
+            </div>
+            <div class="accord-card">
+                <div class="accord-icon">🪵</div>
+                <div class="accord-name">Woody</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="newsletter" id="about">
+        <h2 class="newsletter-title">Join Our Community</h2>
+        <p class="newsletter-description">Subscribe to receive exclusive offers and fragrance recommendations delivered to your inbox.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#collections">Collections</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#accords">Accords</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Our Store</h3>
+                <p style="color: #bbb; line-height: 1.8;">
+                    Your Store Address<br>
+                    City, Country 12345<br><br>
+                    Mon - Sat: 10am - 8pm<br>
+                    Sunday: 11am - 6pm<br><br>
+                    Phone: +1 (555) 123-4567
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LUXE Fragrances. All rights reserved. | Crafted with elegance.</p>
+        </div>
+    </footer>
 </body>
 </html>
