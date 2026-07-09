@@ -96,7 +96,8 @@
           padding: 1rem !important;
         }
         /* Increase tappable target for buttons on touch devices */
-        #products button, #product-detail button {
+        #products button,
+        #product-detail button {
           min-height: 44px;
           padding-top: 0.75rem;
           padding-bottom: 0.75rem;
@@ -769,7 +770,10 @@
           if (window.innerWidth < 768) {
             // give the browser a moment to render the panel then scroll
             setTimeout(() => {
-              detailSection.scrollIntoView({ behavior: "smooth", block: "start" });
+              detailSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
             }, 60);
           }
         }
