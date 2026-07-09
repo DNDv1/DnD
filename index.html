@@ -1,11 +1,791 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DnD Fragrance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#111111",
+              primaryDark: "#080808",
+              secondary: "#383338",
+              accent: "#B0B057",
+              accentHover: "#957445",
+              background: "#151515",
+              surface: "#1E1E1E",
+              card: "#FFFFFF",
+              light: "#F8F8F8",
+              body: "#2A2A2A",
+              muted: "#7F7F7F",
+              border: "#C8C3BA",
+              divider: "#3A3A3A",
+            },
+            fontFamily: {
+              sans: ["Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif"],
+              serif: ["Cormorant Garamond", "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      /* Product highlight / dim styles for JS toggling */
+      .product-highlight {
+        transform: translateY(-6px) scale(1.02);
+        z-index: 40;
+        transition:
+          transform 300ms ease,
+          box-shadow 300ms ease,
+          opacity 300ms ease;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+      }
+      .product-dimmed {
+        transform: translateY(18px) scale(0.98);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          transform 300ms ease,
+          opacity 300ms ease;
+      }
+      #product-detail {
+        transition:
+          opacity 300ms ease,
+          transform 300ms ease;
+      }
+      #product-detail.hidden {
+        opacity: 0;
+        transform: translateY(8px);
+        display: none;
+      }
+      #product-detail.visible {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-light font-sans leading-relaxed">
+    <!-- ============ HEADER ============ -->
+    <header
+      id="mainHeader"
+      class="sticky top-0 z-50 bg-transparent text-light transition duration-300 ease-out"
+    >
+      <div
+        class="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-4 px-6 py-5"
+      >
+        <a
+          href="#home"
+          class="header-brand text-2xl font-light uppercase tracking-[0.35em] text-[#F6F4EF] transition duration-300 hover:text-[#C9A96A]"
+        >
+          DnD Fragrance
+        </a>
+
+        <div class="flex items-center gap-4">
+          <!-- Instagram -->
+          <a
+            href="https://www.instagram.com/notyourdailywear.dnd/?igsh=MTg3N2l3ZGtidGx3dA%3D%3D&utm_source=qr&fbclid=IwY2xjawS8OjhleHRuA2FlbQIxMABicmlkETE0VFR5UEhaczM5WUZJQm1Bc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHg5EshqqSQUBjB80kMIPbCEeDq6XRNR7QpGOEfn6iC-PQYxlR5rEgR3NEeiY_aem_pvALtWC3LICCGmBqFfqRYg"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit our Instagram"
+            class="header-action rounded-full p-2 text-[#F6F4EF] transition duration-300 hover:text-[#C9A96A]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path
+                d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"
+              ></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+
+          <!-- Facebook -->
+          <a
+            href="https://www.facebook.com/profile.php?id=61579845057210&mibextid=wwXIfr&rdid=CaKPHcnAaaE7ab6m&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1ELDPwLeUL#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit our Facebook"
+            class="header-action rounded-full p-2 text-[#F6F4EF] transition duration-300 hover:text-[#C9A96A]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073c0 6.019 4.388 11.009 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.007 1.792-4.669 4.533-4.669 1.313 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.926-1.956 1.875v2.252h3.328l-.532 3.49h-2.796V24C19.612 23.082 24 18.092 24 12.073z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+    <!-- ============ HERO SECTION ============ -->
+    <section
+      id="home"
+      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_center,_#111111_0%,_#111111_30%,_#383338_100%)] text-light"
+    >
+      <div
+        class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,_rgba(224,160,192,0.15)_0%,_rgba(224,160,192,0)_60%)]"
+      ></div>
+      <div
+        class="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 text-center"
+      >
+        <h1
+          class="text-4xl font-serif italic uppercase tracking-[0.35em] text-[#F6F4EF] drop-shadow-[0_12px_24px_rgba(0,0,0,0.55)] sm:text-5xl lg:text-6xl"
+        >
+          DISCOVER ELEGANCE
+        </h1>
+        <p class="mt-6 max-w-xl text-sm text-muted sm:text-base">
+          Curated Fragrances for the Discerning Nose
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ PRODUCT DETAIL (Dynamically populated) ============ -->
+    <section
+      id="product-detail"
+      class="hidden bg-background py-16 px-6 sm:px-8 lg:px-10"
+    >
+      <div class="mx-auto max-w-6xl">
+        <div
+          id="product-detail-content"
+          class="rounded-[1.5rem] bg-surface p-8 text-light"
+        >
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between gap-4">
+              <div id="detail-header" class="min-w-0">
+                <!-- title populated by JS -->
+              </div>
+              <button
+                id="detail-close"
+                class="inline-flex justify-center rounded-full border border-border bg-primary px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-light transition duration-200 hover:bg-accent"
+              >
+                Close
+              </button>
+            </div>
+
+            <div id="detail-main" class="w-full">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED COLLECTIONS ============ -->
+    <section id="collections" class="bg-background py-20 px-6 sm:px-8 lg:px-10">
+      <div class="mx-auto max-w-6xl">
+        <h2
+          class="text-center text-[#F6F4EF] text-3xl font-light uppercase tracking-[0.35em] hover:text-accent sm:text-4xl"
+        >
+          Collections
+        </h2>
+
+        <div class="mt-14 grid gap-6 md:grid-cols-2">
+          <!-- Men's Collection -->
+          <article
+            class="group relative h-[550px] overflow-hidden rounded-[2rem] transition duration-500 hover:scale-[1.02]"
+          >
+            <!-- Background Image -->
+            <div
+              class="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-110"
+              style="background-image: url(&quot;image/main_men.jpg&quot;)"
+            ></div>
+
+            <!-- Bottom Gradient Overlay -->
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent"
+            ></div>
+
+            <!-- Content -->
+            <div
+              class="relative z-10 flex h-full flex-col justify-end p-10 text-surface"
+            >
+              <p class="text-sm uppercase tracking-[0.5em] text-[#F8F5F0]">
+                For Men
+              </p>
+
+              <h3
+                class="mt-3 text-4xl font-semibold text-[#F6F4EF] uppercase tracking-[0.18em]"
+              >
+                Bold & Sophisticated
+              </h3>
+
+              <button
+                class="mt-6 text-[#F6F4EF] inline-flex w-fit rounded-full border border-muted/30 bg-surface/10 px-8 py-3 text-sm uppercase tracking-[0.18em] transition duration-300 hover:bg-surface hover:text-accent"
+              >
+                Explore
+              </button>
+            </div>
+          </article>
+
+          <!-- Women's Collection -->
+          <article
+            class="group relative h-[550px] overflow-hidden rounded-[2rem] transition duration-500 hover:scale-[1.02]"
+          >
+            <!-- Background Image -->
+            <div
+              class="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-110"
+              style="background-image: url(&quot;image/main_women1.jpg&quot;)"
+            ></div>
+
+            <!-- Bottom Gradient Overlay -->
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent"
+            ></div>
+
+            <!-- Content -->
+            <div
+              class="relative z-10 flex h-full flex-col justify-end p-10 text-surface"
+            >
+              <p class="text-sm uppercase tracking-[0.5em] text-[#F8F5F0]">
+                For Women
+              </p>
+
+              <h3
+                class="mt-3 text-[#F6F4EF] text-4xl font-semibold uppercase tracking-[0.18em]"
+              >
+                Elegant & Feminine
+              </h3>
+
+              <button
+                class="mt-6 text-[#F6F4EF] inline-flex w-fit rounded-full border border-muted/30 bg-surface/10 px-8 py-3 text-sm uppercase tracking-[0.18em] transition duration-300 hover:bg-surface hover:text-accent"
+              >
+                Explore
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED PRODUCTS ============ -->
+    <section
+      id="products"
+      class="bg-background py-20 px-6 sm:px-8 lg:px-10 text-light"
+    >
+      <div class="mx-auto max-w-6xl">
+        <h2
+          class="text-center text-3xl font-light uppercase tracking-[0.35em] text-[#F6F4EF] sm:text-4xl"
+        >
+          Best Sellers
+        </h2>
+
+        <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Product 1 -->
+          <article
+            class="rounded-[2rem] bg-secondary p-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-2"
+            data-subtitle="Fresh • Spicy • Woody"
+            data-desc="A fresh and powerful composition of vibrant bergamot, spicy pepper, aromatic lavender, and warm woods. Clean, masculine, and effortlessly sophisticated, this fragrance delivers a bold yet refreshing signature that lasts from day to night."
+          >
+            <img
+              src="image/men1.jpg"
+              alt="men 1 fragrance"
+              class="rounded-[2rem] mb-6 h-64 w-full object-contain transition duration-300 hover:scale-105"
+            />
+
+            <h3 class="text-lg uppercase tracking-[0.18em] text-[#F6F4EF]">
+              Vinci
+            </h3>
+
+            <button
+              class="mt-6 inline-flex w-full justify-center rounded-full bg-surface px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#F6F4EF] transition duration-300 hover:bg-accent"
+            >
+              Details
+            </button>
+          </article>
+
+          <!-- Product 2 -->
+          <article
+            class="rounded-[2rem] bg-secondary p-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-2"
+            data-subtitle="Fruity • Fresh • Smoky • Woody • Musky"
+            data-desc="Leonardo is a smoky, spicy composition with warm amber notes and sharp bergamot for a modern, confident aura."
+          >
+            <img
+              src="image/men2.jpg"
+              alt="men 2 fragrance"
+              class="rounded-[2rem] mb-6 h-64 w-full object-contain transition duration-300 hover:scale-105"
+            />
+
+            <h3 class="text-lg uppercase tracking-[0.18em] text-[#F6F4EF]">
+              Leonardo
+            </h3>
+
+            <button
+              class="mt-6 inline-flex w-full justify-center rounded-full bg-surface px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#F6F4EF] transition duration-300 hover:bg-accent"
+            >
+              Details
+            </button>
+          </article>
+
+          <!-- Product 3 -->
+          <article
+            class="rounded-[2rem] bg-secondary p-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-2"
+            data-subtitle="Amber • Floral • Woody • Musky • Warm"
+            data-desc="A radiant blend of warm amber, delicate jasmine, and rich woods with a smooth musky finish. Elegant, captivating, and unforgettable—crafted to leave a lasting impression."
+          >
+            <img
+              src="image/women1.png"
+              alt="women 1 fragrance"
+              class="rounded-[2rem] mb-6 h-64 w-full object-contain transition duration-300 hover:scale-105"
+            />
+
+            <h3 class="text-lg uppercase tracking-[0.18em] text-[#F6F4EF]">
+              Frankenthaler
+            </h3>
+
+            <button
+              class="mt-6 inline-flex w-full justify-center rounded-full bg-surface px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#F6F4EF] transition duration-300 hover:bg-accent"
+            >
+              Details
+            </button>
+          </article>
+
+          <!-- Product 4 -->
+          <article
+            class="rounded-[2rem] bg-secondary p-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-2"
+            data-subtitle="Nutty • Sweet • Creamy • Vanilla • Gourmand"
+            data-desc="A creamy blend of roasted pistachio, sweet vanilla, and soft whipped cream with a smooth gourmand finish. Playful, comforting, and irresistibly addictive.
+"
+          >
+            <img
+              src="image/women2.png"
+              alt="women 2 fragrance"
+              class="rounded-[2rem] mb-6 h-64 w-full object-contain transition duration-300 hover:scale-105"
+            />
+
+            <h3 class="text-lg uppercase tracking-[0.18em] text-[#F6F4EF]">
+              Walker
+            </h3>
+
+            <button
+              class="mt-6 inline-flex w-full justify-center rounded-full bg-surface px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#F6F4EF] transition duration-300 hover:bg-accent"
+            >
+              Details
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FRAGRANCE ACCORDS ============ -->
+    <section id="accords" class="bg-background py-20 px-6 sm:px-8 lg:px-10">
+      <div class="mx-auto max-w-6xl">
+        <h2
+          class="text-center text-3xl font-light uppercase tracking-[0.35em] text-primary sm:text-4xl"
+        >
+          Fragrance Accords
+        </h2>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            class="group rounded-[2rem] border border-muted bg-surface/10 p-8 text-center transition duration-300 hover:border-accent hover:bg-surface/20"
+          >
+            <div class="text-5xl">🌸</div>
+            <h3 class="mt-5 text-lg uppercase tracking-[0.18em] text-primary">
+              Floral
+            </h3>
+          </div>
+          <div
+            class="group rounded-[2rem] border border-muted bg-surface/10 p-8 text-center transition duration-300 hover:border-accent hover:bg-surface/20"
+          >
+            <div class="text-5xl">🍊</div>
+            <h3 class="mt-5 text-lg uppercase tracking-[0.18em] text-primary">
+              Fruity
+            </h3>
+          </div>
+          <div
+            class="group rounded-[2rem] border border-muted bg-surface/10 p-8 text-center transition duration-300 hover:border-accent hover:bg-surface/20"
+          >
+            <div class="text-5xl">🌿</div>
+            <h3 class="mt-5 text-lg uppercase tracking-[0.18em] text-primary">
+              Fresh
+            </h3>
+          </div>
+          <div
+            class="group rounded-[2rem] border border-muted bg-surface/10 p-8 text-center transition duration-300 hover:border-accent hover:bg-surface/20"
+          >
+            <div class="text-5xl">🌶️</div>
+            <h3 class="mt-5 text-lg uppercase tracking-[0.18em] text-primary">
+              Spicy
+            </h3>
+          </div>
+          <div
+            class="group rounded-[2rem] border border-muted bg-surface/10 p-8 text-center transition duration-300 hover:border-accent hover:bg-surface/20"
+          >
+            <div class="text-5xl">🍬</div>
+            <h3 class="mt-5 text-lg uppercase tracking-[0.18em] text-primary">
+              Sweet
+            </h3>
+          </div>
+          <div
+            class="group rounded-[2rem] border border-muted bg-surface/10 p-8 text-center transition duration-300 hover:border-accent hover:bg-surface/20"
+          >
+            <div class="text-5xl">🪵</div>
+            <h3 class="mt-5 text-lg uppercase tracking-[0.18em] text-primary">
+              Woody
+            </h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section
+      id="about"
+      class="bg-surface py-20 px-6 sm:px-8 lg:px-10 text-light"
+    >
+      <div class="mx-auto max-w-4xl text-center">
+        <h2 class="text-3xl font-light uppercase tracking-[0.35em] sm:text-4xl">
+          Join Our Community
+        </h2>
+        <p class="mt-6 text-base text-muted sm:text-lg">
+          Subscribe to receive exclusive offers and fragrance recommendations
+          delivered to your inbox.
+        </p>
+        <form class="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            required
+            class="w-full rounded-full border border-muted bg-primary px-6 py-4 text-sm text-surface outline-none placeholder:text-muted focus:border-accent focus:ring-4 focus:ring-accent/20 sm:max-w-md"
+          />
+          <button
+            type="submit"
+            class="inline-flex shrink-0 items-center justify-center rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-[0.25em] text-primary transition duration-300 hover:bg-surface"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-primary text-light">
+      <div
+        class="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-10"
+      >
+        <div>
+          <h3 class="mb-6 text-sm uppercase tracking-[0.35em] text-surface">
+            Quick Links
+          </h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#home"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#collections"
+                >Collections</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#products"
+                >Products</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#accords"
+                >Accords</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="mb-6 text-sm uppercase tracking-[0.35em] text-surface">
+            Information
+          </h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >Contact Us</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >Shipping Info</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="mb-6 text-sm uppercase tracking-[0.35em] text-surface">
+            Our Store
+          </h3>
+          <p class="text-sm leading-7 text-muted">
+            Your Store Address<br />
+            City, Country 12345<br /><br />
+            Mon - Sat: 10am - 8pm<br />
+            Sunday: 11am - 6pm<br /><br />
+            Phone: +1 (555) 123-4567
+          </p>
+        </div>
+        <div>
+          <h3 class="mb-6 text-sm uppercase tracking-[0.35em] text-surface">
+            Follow Us
+          </h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >Facebook</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >TikTok</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors duration-300 hover:text-accent"
+                href="#"
+                >Twitter</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="border-t border-muted px-6 py-6 text-center text-sm text-muted lg:px-10"
+      >
+        &copy; 2024 DnD Fragrances. All rights reserved. | Crafted with
+        elegance.
+      </div>
+    </footer>
+    <script>
+      const header = document.getElementById("mainHeader");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const headerBrand = document.querySelector(".header-brand");
+      const headerActions = document.querySelectorAll(".header-action");
+
+      const updateHeader = () => {
+        const isScrolled = window.scrollY > 50;
+        header.classList.toggle("backdrop-blur-xl", isScrolled);
+        header.classList.toggle("shadow-xl", isScrolled);
+        header.classList.toggle("border-b", isScrolled);
+        header.classList.toggle("border-muted/40", isScrolled);
+
+        if (isScrolled) {
+          headerBrand.classList.replace("text-primary", "text-accent");
+          navLinks.forEach((link) =>
+            link.classList.replace("text-primary", "text-muted"),
+          );
+          headerActions.forEach((button) =>
+            button.classList.replace("text-primary", "text-muted"),
+          );
+        } else {
+          headerBrand.classList.replace("text-accent", "text-primary");
+          navLinks.forEach((link) =>
+            link.classList.replace("text-muted", "text-primary"),
+          );
+          headerActions.forEach((button) =>
+            button.classList.replace("text-muted", "text-primary"),
+          );
+        }
+      };
+
+      window.addEventListener("scroll", updateHeader);
+      window.addEventListener("load", updateHeader);
+      // ===== Product detail / highlight behavior =====
+      (function () {
+        const productsSection = document.getElementById("products");
+        if (!productsSection) return;
+        const articles = Array.from(
+          productsSection.querySelectorAll("article"),
+        );
+        const detailSection = document.getElementById("product-detail");
+        const detailHeader = document.getElementById("detail-header");
+        const detailMain = document.getElementById("detail-main");
+        const closeBtn = document.getElementById("detail-close");
+        let activeArticle = null;
+
+        function populateDetail(article) {
+          const title = article.querySelector("h3")?.innerText || "";
+          const price = article.querySelector("p")?.innerText || "";
+          const imgSrc =
+            article.querySelector("img")?.getAttribute("src") || "";
+          const description =
+            article.getAttribute("data-desc") ||
+            "A fresh and powerful composition of vibrant bergamot, spicy pepper, aromatic lavender, and warm woods. Clean, masculine, and effortlessly sophisticated, this fragrance delivers a bold yet refreshing signature that lasts from day to night.";
+          const subtitle =
+            article.getAttribute("data-subtitle") || "Fresh • Spicy • Woody";
+
+          detailHeader.innerHTML = `
+            <div>
+              <h3 class="text-2xl font-semibold leading-tight">${title}</h3>
+              <p class="mt-2 italic text-sm text-muted">${subtitle}</p>
+            </div>
+          `;
+
+          detailMain.innerHTML = `
+            <div class="flex flex-col md:flex-row gap-6">
+              <div class="md:flex-1">
+                <p class="mb-4 text-accent font-medium">${price}</p>
+                <p class="text-sm text-muted text-justify">
+  ${description}
+</p>
+              </div>
+            </div>
+          `;
+        }
+
+        function placePanelNear(article) {
+          // Mobile: place panel after products (full width)
+          if (window.innerWidth < 768) {
+            detailSection.style.position = "";
+            detailSection.style.top = "";
+            detailSection.style.left = "";
+            detailSection.style.width = "";
+            productsSection.parentNode.insertBefore(
+              detailSection,
+              productsSection.nextSibling,
+            );
+            return;
+          }
+
+          // Desktop: floating panel near the card
+          document.body.appendChild(detailSection);
+          detailSection.style.position = "absolute";
+          const rect = article.getBoundingClientRect();
+          const panelMax = Math.min(420, Math.floor(window.innerWidth * 0.32));
+          let top = rect.top + window.scrollY;
+          let left = rect.right + 16 + window.scrollX;
+          if (left + panelMax > window.innerWidth - 16) {
+            left = rect.left - panelMax - 16;
+          }
+          if (left < 16) {
+            left = Math.max(16, (window.innerWidth - panelMax) / 2);
+          }
+          detailSection.style.top = `${top}px`;
+          detailSection.style.left = `${left}px`;
+          detailSection.style.width = `${panelMax}px`;
+        }
+
+        function openArticle(article) {
+          activeArticle = article;
+          articles.forEach((a) => {
+            if (a === article) {
+              a.classList.add("product-highlight");
+              a.classList.remove("product-dimmed");
+            } else {
+              a.classList.add("product-dimmed");
+              a.classList.remove("product-highlight");
+            }
+          });
+          populateDetail(article);
+          placePanelNear(article);
+          detailSection.classList.remove("hidden");
+          detailSection.classList.add("visible");
+        }
+
+        function closeDetail() {
+          activeArticle = null;
+          articles.forEach((a) => {
+            a.classList.remove("product-dimmed", "product-highlight");
+          });
+          detailSection.classList.remove("visible");
+          detailSection.classList.add("hidden");
+          // restore panel back to flow (keep it hidden)
+          productsSection.parentNode.insertBefore(
+            detailSection,
+            productsSection.nextSibling,
+          );
+          // scroll back to products for mobile
+          if (window.innerWidth < 768) {
+            window.scrollTo({
+              top: productsSection.offsetTop - 40,
+              behavior: "smooth",
+            });
+          }
+        }
+
+        // attach listeners to Details buttons inside products
+        articles.forEach((article) => {
+          const btn = article.querySelector("button");
+          if (!btn) return;
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openArticle(article);
+          });
+        });
+
+        closeBtn?.addEventListener("click", () => closeDetail());
+
+        // click outside to close (desktop)
+        document.addEventListener("click", (e) => {
+          if (!detailSection.classList.contains("visible")) return;
+          if (window.innerWidth < 768) return; // mobile handled by close button
+          const isInsidePanel = detailSection.contains(e.target);
+          const isInsideArticle =
+            activeArticle && activeArticle.contains(e.target);
+          if (!isInsidePanel && !isInsideArticle) {
+            closeDetail();
+          }
+        });
+
+        // reposition on resize while open
+        window.addEventListener("resize", () => {
+          if (!detailSection.classList.contains("visible") || !activeArticle)
+            return;
+          placePanelNear(activeArticle);
+        });
+      })();
+    </script>
+  </body>
 </html>
