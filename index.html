@@ -87,13 +87,13 @@
         h1 {
           font-size: 2rem;
         }
-        /* Make detail panel full-width and slightly padded on mobile */
+        /* Make detail panel full-width and reduce top padding on mobile so content appears sooner */
         #product-detail {
-          padding-top: 1rem;
-          padding-bottom: 1rem;
+          padding-top: 0.25rem;
+          padding-bottom: 0.5rem;
         }
         #product-detail-content {
-          padding: 1rem !important;
+          padding: 0.75rem !important;
         }
         /* Increase tappable target for buttons on touch devices */
         #products button,
@@ -101,6 +101,26 @@
           min-height: 44px;
           padding-top: 0.75rem;
           padding-bottom: 0.75rem;
+        }
+        /* Keep header fixed and social icons accessible on mobile */
+        #mainHeader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 60;
+          background: rgba(17, 17, 17, 0.95);
+        }
+        .header-actions-wrap {
+          position: absolute;
+          right: 12px;
+          top: 10px;
+          display: flex;
+          gap: 0.5rem;
+        }
+        /* push page content below fixed header */
+        body {
+          padding-top: 64px;
         }
       }
     </style>
@@ -121,7 +141,7 @@
           DnD Fragrance
         </a>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 header-actions-wrap">
           <!-- Instagram -->
           <a
             href="https://www.instagram.com/notyourdailywear.dnd/?igsh=MTg3N2l3ZGtidGx3dA%3D%3D&utm_source=qr&fbclid=IwY2xjawS8OjhleHRuA2FlbQIxMABicmlkETE0VFR5UEhaczM5WUZJQm1Bc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHg5EshqqSQUBjB80kMIPbCEeDq6XRNR7QpGOEfn6iC-PQYxlR5rEgR3NEeiY_aem_pvALtWC3LICCGmBqFfqRYg"
@@ -768,12 +788,25 @@
           detailSection.classList.add("visible");
           // On phones, ensure the detail panel is scrolled into view so title is visible
           if (window.innerWidth < 768) {
-            // give the browser a moment to render the panel then scroll
+            // give the browser a moment to render the panel then scroll the detail panel into view
             setTimeout(() => {
-              detailSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
+              const headerHeight =
+                document.getElementById("mainHeader")?.offsetHeight || 0;
+              const rect = detailSection.getBoundingClientRect();
+              const extraOffset = 6; // smaller gap so description appears sooner
+              const target = Math.max(
+                0,
+                rect.top + window.scrollY - headerHeight - extraOffset,
+              );
+              window.scrollTo({ top: target, behavior: "smooth" });
+              // focus the header for accessibility so the user sees the title immediately
+              try {
+                detailHeader.setAttribute("tabindex", "-1");
+                detailHeader.focus();
+                detailHeader.removeAttribute("tabindex");
+              } catch (e) {
+                /* ignore focus errors */
+              }
             }, 60);
           }
         }
